@@ -21,3 +21,6 @@ class OrderFeedLocators:
 
     # Крестик для закрытия всплывающего окна с номером заказа
     CLOSE_ORDER_MODAL_BUTTON = (By.XPATH, "//button[contains(@class, 'Modal_modal__close_')]")
+
+    # Шаблон для динамического поиска номера заказа в Ленте
+    ORDER_BY_NUMBER_TEMPLATE = "//*[contains(text(), '{number}')]"

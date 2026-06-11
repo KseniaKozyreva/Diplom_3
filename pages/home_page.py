@@ -34,15 +34,15 @@ class HomePage(BasePage):
 
     @allure.step("Проверить, отображается ли заголовок конструктора")
     def is_constructor_header_displayed(self):
-        return self.wait_for_element_visible(HomePageLocators.CONSTRUCTOR_HEADER).is_displayed()
+        return self.is_element_visible(HomePageLocators.CONSTRUCTOR_HEADER)
 
     @allure.step("Проверить, отображается ли заголовок ленты заказов")
     def is_feed_header_displayed(self):
-        return self.wait_for_element_visible(HomePageLocators.FEED_HEADER).is_displayed()
+        return self.is_element_visible(HomePageLocators.FEED_HEADER)
 
     @allure.step("Проверить, отображается ли модальное окно")
     def is_modal_window_displayed(self):
-        return self.wait_for_element_visible(HomePageLocators.MODAL_WINDOW).is_displayed()
+        return self.is_element_visible(HomePageLocators.MODAL_WINDOW)
 
     @allure.step("Проверить, исчезло ли модальное окно деталей ингредиента")
     def is_modal_window_invisible(self):

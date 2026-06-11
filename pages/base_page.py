@@ -12,11 +12,29 @@ class BasePage:
             message=f"Элемент не найден в DOM за {timeout} сек: {locator}"
         )
 
+    def wait_text_not_present(self, locator, text, timeout=30):
+        return WebDriverWait(self.driver, timeout).until_not(
+            EC.text_to_be_present_in_element(locator, text),
+            message=f"Текст '{text}' не исчез из элемента {locator} за {timeout} сек"
+        )
+
     def wait_for_element_visible(self, locator, timeout=15):
         return WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator),
             message=f"Элемент не стал видимым за {timeout} сек: {locator}"
         )
+
+    def click_element(self, locator, timeout=15):
+        element = WebDriverWait(self.driver, timeout).until(
+            EC.element_to_be_clickable(locator),
+            message=f"Элемент не стал кликабельным за {timeout} сек: {locator}"
+        )
+        element.click()
+
+    def fill_field(self, locator, text, timeout=15):
+        element = self.wait_for_element_visible(locator, timeout)
+        element.clear()
+        element.send_keys(text)
 
     def click_via_js(self, locator):
         element = self.wait_for_element(locator)
@@ -67,9 +85,6 @@ class BasePage:
             return False
 
     def is_element_invisible(self, locator, timeout=5):
-        from selenium.webdriver.support.ui import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
-        from selenium.common.exceptions import TimeoutException
         try:
             WebDriverWait(self.driver, timeout).until(
                 EC.invisibility_of_element_located(locator)
@@ -80,3 +95,6 @@ class BasePage:
 
     def refresh_page(self):
         self.driver.refresh()
+
+    def execute_js(self, script, *args):
+        return self.driver.execute_script(script, *args)
